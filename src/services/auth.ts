@@ -36,21 +36,23 @@ interface Response {
 export function signIn(email: string, password: string): Promise<Response> {
   return new Promise<Response>((resolve) => {
     resolve(
-      api.get(`/sign-in/?username=${ email }`, {
-        password: password,
-      })
-        .then(function (response: { data: any; status: any; }) {
-          if (response.data[ 0 ].password === password && response.data != undefined) {
-            console.log(response.data[ 0 ].id);
+      api
+        .get(`/sign-in/?username=${email}`, {
+          password: password,
+        })
+        .then(function (response: { data: any; status: any }) {
+          if (
+            response.data[0].password === password &&
+            response.data != undefined
+          ) {
+            console.log(response.data[0].id);
             return response;
           }
-          return "";
-
-        }).catch(function (response: any) {
-
-          console.log("Erro ao tentar fazer a requisição - " + response.error);
+          return '';
+        })
+        .catch(function (response: any) {
+          console.log('Erro ao tentar fazer a requisição - ' + response.error);
           return response.error;
-
         })
     );
   });
@@ -59,20 +61,19 @@ export function signIn(email: string, password: string): Promise<Response> {
 export function register(email: string, password: string): Promise<Response> {
   return new Promise((resolve) => {
     resolve(
-      api.post('/sign-up', {
-        username: email,
-        password: password,
-      }).then(function (response: { data: any; status: any; }) {
-
-        console.log(response.data);
-        return response.status;
-
-      }).catch(function (response: any) {
-
-        console.log(response);
-        return response;
-
-      })
+      api
+        .post('/sign-up', {
+          username: email,
+          password: password,
+        })
+        .then(function (response: { data: any; status: any }) {
+          console.log(response.data);
+          return response.status;
+        })
+        .catch(function (response: any) {
+          console.log(response);
+          return response;
+        })
     );
   });
 }
@@ -85,33 +86,40 @@ export function forgotPassword(username: string): Promise<Response> {
         .then(function (response: any) {
           return response;
         })
-        .catch(function (response: { status: any; }) {
+        .catch(function (response: { status: any }) {
           if (response.status < '500') {
             console.log(response.status);
             return response.status;
           }
-        }),
+        })
     );
   });
 }
 
-export function feed(title: string, content: string, author: string, create?: Date, update?: Date): Promise<Response> {
+export function feed(
+  title: string,
+  content: string,
+  author: string,
+  create?: Date,
+  update?: Date
+): Promise<Response> {
   return new Promise((resolve) => {
     resolve(
-      api.post('/news', {
-        title: title,
-        text: content,
-        author: author,
-        createdAt: create,
-        updatedAt: update
-      })
-        .then(function (response: { status: any; data: any; }) {
+      api
+        .post('/news', {
+          title: title,
+          text: content,
+          author: author,
+          createdAt: create,
+          updatedAt: update,
+        })
+        .then(function (response: { status: any; data: any }) {
           console.log(response.status);
           return response.data;
         })
         .catch((error: any) => {
           console.log(error);
-        }),
+        })
     );
   });
 }
@@ -119,7 +127,7 @@ export function feed(title: string, content: string, author: string, create?: Da
 export function reaction(
   feedId: number,
   like: boolean,
-  love: boolean,
+  love: boolean
 ): Promise<Response> {
   return new Promise((resolve) => {
     resolve(
@@ -129,7 +137,7 @@ export function reaction(
           like: like,
           love: love,
         })
-        .then(function (response: { status: number; }) {
+        .then(function (response: { status: number }) {
           console.log(response.status);
           var res: any = '';
           if (response.status === 200) {
@@ -139,7 +147,7 @@ export function reaction(
         })
         .catch((error: any) => {
           console.log(error);
-        }),
+        })
     );
   });
 }

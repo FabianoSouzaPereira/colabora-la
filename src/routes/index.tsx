@@ -13,8 +13,16 @@ function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScream} options={{ title: 'Home' }}/>
-        <Stack.Screen name="Details" component={DetailsScreen} options={{ title: 'Details' }}/>
+        <Stack.Screen
+          name="Home"
+          component={HomeScream}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+          options={{ title: 'Details' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

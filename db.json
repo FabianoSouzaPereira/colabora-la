@@ -5,13 +5,32 @@
       "title": "json-server",
       "text": "Texto da notícia aqui.",
       "author": "fabiano@gmail.com",
+      "picture": "",
       "createdAt": "2020-05-01",
-      "updatedAt": "2020-05-02"
+      "updatedAt": "2020-05-02",
+      "comments": [
+        {
+          "id": 3,
+          "name": "Ana Maria",
+          "comment": "Gostei da idéia ammigo.",
+          "createdAt": "2020-05-01",
+          "updatedAt": "2020-05-02"
+        },
+        {
+          "id": 4,
+          "name": "Pedro paulo",
+          "comment": "Excelente postagem!",
+          "createdAt": "2020-05-01",
+          "updatedAt": "2020-05-02"
+        }
+      ]
     },
     {
       "id": 2,
       "title": "Noticia Nova",
       "text": "Texto da notícia aqui.",
+      "picture": "",
+      "video": "",
       "author": "fabiano@gmail.com",
       "createdAt": "2020-05-01",
       "updatedAt": "2020-05-02"
