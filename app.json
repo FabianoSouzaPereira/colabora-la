@@ -5,6 +5,9 @@
     "name": "rn-expo-jsonserver",
     "slug": "rn-expo-jsonserver",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "description": ""
   }
 }

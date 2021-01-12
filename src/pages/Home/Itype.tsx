@@ -1,7 +1,7 @@
 export default interface Itype {
   id: string;
   title: string;
-  picture: string;
+  picture: any;
   message: string;
   createdAt: string;
   updatedAt: string;

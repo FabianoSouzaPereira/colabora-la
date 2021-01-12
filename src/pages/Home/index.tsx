@@ -7,25 +7,24 @@ import {
   StyleSheet,
   FlatList,
   Text,
-  ListViewComponent,
-  ScrollView,
   StatusBar,
+  Image,
   Platform,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import SystemContext from '../../contexts/systemContext';
 import * as HomeActions from './actions';
 import Itypes from './Itype';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TextInput } from 'react-native-gesture-handler';
 
 const DATA = [
   {
     id: '1',
-    title: 'First Item',
+    title: 'Problema em Barranco',
     name: 'Carlos Eduardo',
-    picture: 'Foto',
-    message: 'Tudo bem aqui.',
+    picture: require('../../assets/img/buraco.jpg'),
+    message: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\n Utenim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n\n Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."',
     createdAt: '2020-05-01',
     updatedAt: '2020-05-02',
     comments: [
@@ -48,8 +47,8 @@ const DATA = [
   {
     id: '2',
     title: 'Second Item',
-    picture: '',
-    message: '',
+    picture: require('../../assets/img/buraco.jpg'),
+    message: 'Gostei da idéia amigo.',
     createdAt: '2020-05-01',
     updatedAt: '2020-05-02',
     comments: [
@@ -72,8 +71,8 @@ const DATA = [
   {
     id: '3',
     title: 'Third Item',
-    picture: '',
-    message: '',
+    picture: require('../../assets/img/buraco.jpg'),
+    message: 'Gostei da idéia amigo.',
     createdAt: '2020-05-01',
     updatedAt: '2020-05-02',
     comments: [
@@ -104,36 +103,50 @@ const Item: React.FC<Itypes> = ({
   createdAt,
   updatedAt,
 }) => (
-  <View style={styles.item}>
-    <Text style={styles.id}>{id}</Text>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.message}>{message}</Text>
-    <Text style={styles.picture}>{picture}</Text>
-    <Text style={styles.createdAt}>{createdAt}</Text>
-    <Text style={styles.updatedAt}>{updatedAt}</Text>
+  <>
+    <View style={styles.item}>
+      <View style={styles.header}>
+        <View style={styles.headerGroup}>
+          <Icon name="person" size={50} color="#b5b5b5" style={styles.photoUser} />
+          <Text style={styles.id}>{id}</Text>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+      </View>
+      <View style={styles.pictureHeader}>
+        <Image style={styles.picture} source={picture} />
+        <TextInput style={styles.message} multiline maxLength={900}>{message}</TextInput>
+        <View style={styles.message1}>
+          <Text style={styles.createdAt}>{createdAt}</Text>
+          <Text style={styles.updatedAt}>{updatedAt}</Text>
+        </View>
+      </View>
+      <View style={styles.messageGroup}>
+        <View style={styles.commnetsText}>
+          <Text style={styles.commnentsId}>{comments.id}</Text>
+          <Text style={styles.commnentsname}>{comments.name}</Text>
+          <Text style={styles.comcomment}>{comments.comment}</Text>
+          <Text style={styles.comm_date}>{comments.createdAt}</Text>
+          <Text style={styles.comm_update}>{comments.updatedAt}</Text>
+        </View>
+      </View>
+    </View>
+  </>
 
-    <Text style={styles.commnentsId}>{comments.id}</Text>
-    <Text style={styles.commnentsname}>{comments.name}</Text>
-    <Text style={styles.comcomment}>{comments.comment}</Text>
-    <Text style={styles.comm_date}>{comments.createdAt}</Text>
-    <Text style={styles.comm_update}>{comments.updatedAt}</Text>
-  </View>
 );
 
-function HomeScreen({ navigation, homeaction }) {
-  const { OS, SysIOS, SysAndroid, SysWeb, SysWindows, SysMacOs } = useContext(
-    SystemContext
-  );
+function HomeScreen({ navigation }) {
   const styleTypes = [ 'default', 'dark-content', 'light-content' ];
-  const [ visibleStatusBar, setVisibleStatusBar ] = useState(false);
-  const [ styleStatusBar, setStyleStatusBar ] = useState(styleTypes[ 0 ]);
+  const [] = useState(false);
+  const [ styleStatusBar ] = useState(styleTypes[ 0 ]);
 
   const renderItem = ({ item }) => (
     <Item
       id={item.id}
       title={item.title}
-      message={item.message}
       picture={item.picture}
+      message={item.message}
+      createdAt={'date: ' + item.createdAt + ' '}
+      updatedAt={'update: ' + item.updatedAt}
       comments={[ item.comments.id, item.comments.name ]}
     />
   );
@@ -180,10 +193,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#0e0e0e',
       },
       android: {
-        backgroundColor: '#0e0e0e',
+        backgroundColor: '#000000',
       },
       web: {
-        backgroundColor: '#blue',
+        backgroundColor: '#DD9393',
       },
       windows: {
         backgroundColor: '#0e0e0e',
@@ -195,13 +208,86 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    marginBottom: 0,
-    top: 10,
-    bottom: 0,
+    marginTop: 0,
+    backgroundColor: 'green',
   },
-  item: {},
-  title: {},
+  item: {
+    minHeight: 500,
+    // maxHeight: 550,
+    paddingTop: 10,
+    paddingBottom: 100,
+    backgroundColor: '#D7EAB9',
+    borderColor: '#000',
+    borderWidth: 1,
+    marginBottom: 15,
+  },
+  header: {
+    minHeight: 50,
+    maxHeight: 50,
+  },
+  id: {
+    display: 'none',
+  },
+  title: {
+    minHeight: 20,
+    maxHeight: 20,
+  },
+  commentText: {
+    // backgroundColor: 'blue',
+  },
+  pictureHeader: {
+    // backgroundColor: '#fffafa', 
+  },
+  picture: {
+    minHeight: 250,
+    maxHeight: 250,
+  },
+  messageGroup: {
+    backgroundColor: '#D4BBBB',
+    display: 'flex',
+  },
+  message: {
+    paddingStart: 8,
+    paddingEnd: 8,
+    paddingTop: 8,
+
+    paddingBottom: 15,
+    minHeight: 100,
+    // maxHeight: 500,
+    backgroundColor: '#CEEF9A',
+  },
+  message1: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  createdAt: {
+    display: 'none',
+  },
+  updatedAt: {
+    display: 'none',
+  },
+  commnentsId: {},
+  commnetsText: {},
+  commnentsname: {},
+  comcomment: {},
+  comm_date: {},
+  comm_update: {},
+  headerGroup: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingBottom: 15,
+  },
+  photoUser: {
+    minHeight: 50,
+    maxHeight: 50,
+    minWidth: 50,
+    maxWidth: 50,
+    marginEnd: 10,
+    borderRadius: 45,
+    backgroundColor: '#ECF1E3',
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
