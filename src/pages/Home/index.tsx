@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { TextInput } from 'react-native-gesture-handler';
 import { useState, useContext } from 'react';
 import {
   Button,
@@ -16,7 +17,9 @@ import SystemContext from '../../contexts/systemContext';
 import * as HomeActions from './actions';
 import Itypes from './Itype';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TextInput } from 'react-native-gesture-handler';
+Icon.loadFont();
+import FabButom from '../../components/floatbuttom';
+
 
 const DATA = [
   {
@@ -114,6 +117,7 @@ const Item: React.FC<Itypes> = ({
       </View>
       <View style={styles.pictureHeader}>
         <Image style={styles.picture} source={picture} />
+        <Icon name="add" size={25} color="#b5b5b5" style={styles.menuedit} />
         <TextInput style={styles.message} multiline maxLength={900}>{message}</TextInput>
         <View style={styles.message1}>
           <Text style={styles.createdAt}>{createdAt}</Text>
@@ -152,22 +156,29 @@ function HomeScreen({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        barStyle={styleStatusBar}
-        backgroundColor="blue"
-        hidden={false}
-      />
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.push('Details')}
-      />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.container}>
+        <View>
+          <StatusBar
+            barStyle={styleStatusBar}
+            backgroundColor="blue"
+            hidden={false}
+          />
+
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+          <FabButom style={{ bottom: 120, right: 60, }} />
+          <Button
+            title="Go to Details"
+            onPress={() => navigation.push('Details')}
+          />
+
+        </View>
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -212,7 +223,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   item: {
-    minHeight: 500,
+    minHeight: 450,
     // maxHeight: 550,
     paddingTop: 10,
     paddingBottom: 100,
@@ -250,11 +261,12 @@ const styles = StyleSheet.create({
     paddingStart: 8,
     paddingEnd: 8,
     paddingTop: 8,
-
     paddingBottom: 15,
+    marginTop: 0,
     minHeight: 100,
     // maxHeight: 500,
     backgroundColor: '#CEEF9A',
+    zIndex: 1,
   },
   message1: {
     flex: 1,
@@ -288,6 +300,18 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     backgroundColor: '#ECF1E3',
   },
+  menuedit: {
+    flex: 1,
+    position: 'relative',
+    alignSelf: 'flex-end',
+    marginTop: 0,
+    marginEnd: 8,
+    zIndex: 5,
+    backgroundColor: 'blue',
+    elevation: 5,
+    shadowColor: '#0c0c0c',
+
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
